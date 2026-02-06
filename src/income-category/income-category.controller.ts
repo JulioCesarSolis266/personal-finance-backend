@@ -39,7 +39,7 @@ export class IncomeCategoryController {
     @Param('id') id: string,
     @Body() dto: UpdateIncomeCategoryDto,
   ) {
-    return this.incomeCategoryService.update(req.user.id, String(id), dto);
+    return this.incomeCategoryService.update(req.user.id, id, dto);
   }
 
   @Delete(':id')

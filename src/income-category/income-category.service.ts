@@ -34,29 +34,17 @@ export class IncomeCategoryService {
   }
 
   async update(userId: string, id: string, dto: UpdateIncomeCategoryDto) {
-    const category = await this.prisma.incomeCategory.findFirst({
+    const updated = await this.prisma.incomeCategory.updateMany({
       where: { id, userId },
-    });
-
-    if (!category) {
-      throw new NotFoundException('Categoría no encontrada');
-    }
-
-    return this.prisma.incomeCategory.update({
-      where: { id },
       data: dto,
     });
-  }
 
-  async remove(userId: string, id: string) {
-    const result = await this.prisma.incomeCategory.deleteMany({
-      where: { id, userId },
-    });
-
-    if (result.count === 0) {
+    if (updated.count === 0) {
       throw new NotFoundException('Categoría no encontrada');
     }
 
-    return { message: 'Eliminado correctamente' };
+    return {
+      message: 'Categoría actualizada correctamente',
+    };
   }
 }
